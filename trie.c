@@ -7,10 +7,10 @@
 #define WORD 30
 
 typedef struct node {
-    long unsigned int count;
+    long unsigned int count;        //num of apperance
     struct node* children[NUM_LETTERS];
-    enum {FALSE=0, TRUE=1} end;
-    int numOfChild;
+    enum {FALSE=0, TRUE=1} end;        //if its end of word
+    int numOfChild;                 // how many child has
 } node;
 
 // return a new node
@@ -18,8 +18,8 @@ node* new_node(){
     node *p_node = NULL;
     p_node = (node*) malloc(sizeof(node));
     if(p_node){
-        p_node -> end = FALSE;      //if its end of word
-        p_node -> count = 0;        //num of apperance
+        p_node -> end = FALSE;      
+        p_node -> count = 0;        
         p_node -> numOfChild = 0;
         for(int i=0; i<NUM_LETTERS; i++)
             p_node -> children[i] = NULL;
@@ -57,6 +57,7 @@ void insert(node *root, char *w){
     curr -> count++;
 }
 
+// print trie 
 void print_word(node *root, char s[], int level){
     node * curr =root;
     if (!curr)
@@ -77,6 +78,7 @@ void print_word(node *root, char s[], int level){
     }
 }
 
+// print reverse order
 void r_print_word(node *root, char s[], int level){
     if (root -> end)
     {
@@ -94,6 +96,7 @@ void r_print_word(node *root, char s[], int level){
     }
 }
 
+//getting word
 int get_word(char w[]){
     int num_of_char = 0;
     char c ;
@@ -109,6 +112,17 @@ int get_word(char w[]){
     return num_of_char;
 }
 
+// free all dynamic memory
+void clean(node *root){
+    if (!root)
+        return;
+    node * temp = root;
+    for (int i = 0; i <NUM_LETTERS ; ++i) {
+        clean(temp -> children[i]);
+        free(temp->children[i]);
+    }
+}
+
 int main(int argc, char *argv[]){
     char *word = (char*) calloc(WORD,sizeof(char));
 
@@ -120,14 +134,17 @@ int main(int argc, char *argv[]){
         memset(word, 0, WORD);
     }
 
+    free(word);
     int level = 0;
     char str[30];
 
     if (argc > 1)
-         r_print_word(root, str, level);
-     else
-    print_word(root, str, level);
+        r_print_word(root, str, level);
+    else
+        print_word(root, str, level);
 
+    clean(root);
+    free(root);
     return 0;
 }
 
