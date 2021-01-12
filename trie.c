@@ -52,9 +52,12 @@ void insert(node *root, char *w){
             curr = curr -> children[index];
         }
     }
-
-    curr -> end = TRUE;
-    curr -> count++;
+    
+    if (len > 0)
+    {
+        curr -> end = TRUE;
+        curr -> count++;
+    }
 }
 
 // print trie 
@@ -98,7 +101,7 @@ void r_print_word(node *root, char s[], int level){
 
 //getting word
 int get_word(char w[]){
-    int num_of_char = 0;
+    int num_of_char = 1;
     char c ;
 
     if(scanf("%c", &c)<0)
