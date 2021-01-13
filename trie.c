@@ -68,7 +68,7 @@ void print_word(node *root, char s[], int level){
     if (curr -> end)
     {
         s[level] =0;
-        printf("%s\t%ld\n", s, curr -> count);
+        printf("%s %ld\n", s, curr -> count);
     }
 
     for (int i = 0; i < NUM_LETTERS; i++)
@@ -86,7 +86,7 @@ void r_print_word(node *root, char s[], int level){
     if (root -> end)
     {
         s[level] =0;
-        printf("%s\t%ld\n", s, root -> count);
+        printf("%s %ld\n", s, root -> count);
     }
 
     for (int i = NUM_LETTERS-1 ; i >=0 ; i--)
